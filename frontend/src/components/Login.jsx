@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 
-function Login({ setToken }) {
+function Login({ setToken, setRol }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,6 +12,10 @@ function Login({ setToken }) {
       const response = await api.post('/auth/login', { email, password });
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
+      if (response.data.usuario && response.data.usuario.rol) {
+        setRol(response.data.usuario.rol);
+        localStorage.setItem('rol', response.data.usuario.rol);
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Error al iniciar sesión');
     }

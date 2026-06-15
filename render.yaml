@@ -1,0 +1,47 @@
+services:
+  # Backend - Node.js API
+  - type: web
+    name: eventos-backend
+    env: node
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    rootDir: backend
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: DB_NAME
+        fromDatabase:
+          name: eventos-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: eventos-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: eventos-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: eventos-db
+          property: host
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Frontend - React (Vite)
+  - type: web
+    name: eventos-frontend
+    env: static
+    region: oregon
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    rootDir: frontend
+
+databases:
+  - name: eventos-db
+    databaseName: eventos_db
+    region: oregon
+    plan: free
