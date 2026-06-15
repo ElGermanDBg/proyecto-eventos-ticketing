@@ -1,0 +1,21 @@
+# Dependencias de Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Variables de entorno (¡Muy importante no subir contraseñas!)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Archivos de build y temporales
+dist/
+build/
+.DS_Store
+.vscode/
+
+# Logs
+logs
+*.log
