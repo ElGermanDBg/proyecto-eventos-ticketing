@@ -31,7 +31,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        value: https://eventos-frontend.onrender.com
+        value: https://eventos-frontend.vercel.app
 
   # Frontend - React (Vite)
   - type: web

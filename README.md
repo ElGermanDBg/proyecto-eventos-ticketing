@@ -6,7 +6,7 @@ El sistema está construido con una arquitectura Cliente-Servidor (React + Node.
 
 **Repositorio:** [https://github.com/ElGermanDBg/proyecto-eventos-ticketing](https://github.com/ElGermanDBg/proyecto-eventos-ticketing)
 
-**Aplicación Desplegada:** [https://eventos-frontend.onrender.com](https://eventos-frontend.onrender.com)
+**Aplicación Desplegada:** [https://eventos-frontend.vercel.app](https://eventos-frontend.vercel.app)
 
 ---
 
@@ -31,6 +31,8 @@ El sistema está construido con una arquitectura Cliente-Servidor (React + Node.
 ```
 proyecto/
 ├── backend/
+│   ├── api/                  # Punto de entrada para Vercel Serverless
+│   │   └── index.js
 │   ├── src/
 │   │   ├── config/          # Configuración de Base de Datos (Sequelize)
 │   │   │   └── database.js
@@ -52,7 +54,8 @@ proyecto/
 │   │   └── app.js            # Punto de entrada del servidor
 │   ├── tests/                # Pruebas unitarias (Jest + Supertest)
 │   │   └── eventos.test.js
-│   └── package.json
+│   ├── package.json
+│   └── vercel.json           # Configuración de despliegue Vercel (Backend)
 ├── frontend/
 │   ├── src/
 │   │   ├── components/       # Componentes React
@@ -65,9 +68,9 @@ proyecto/
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   └── package.json
-├── render.yaml               # Configuración de despliegue (Render.com)
+├── render.yaml               # Configuración de despliegue alternativa (Render.com)
 ├── INFORME_SEGURIDAD.md      # Informe de seguridad implementada
-├── DEPLOY.md                 # Guía de despliegue
+├── DEPLOY.md                 # Guía de despliegue en Vercel
 └── README.md                 # Este archivo
 ```
 
@@ -173,9 +176,9 @@ Este proyecto integra múltiples capas de seguridad:
 ---
 
 ## 🚀 Despliegue
-La aplicación está desplegada en **Render.com** usando un Blueprint (`render.yaml`) que configura automáticamente:
-- ✅ Base de datos PostgreSQL (`eventos-db`)
-- ✅ Backend Node.js (`eventos-backend`)
-- ✅ Frontend React estático (`eventos-frontend`)
+La aplicación está desplegada en **Vercel** como dos proyectos separados:
+- ✅ **Frontend** — Static Site (Vite/React) en Vercel
+- ✅ **Backend** — Serverless Functions (Express/Node.js) en Vercel
+- ✅ **Base de datos** — PostgreSQL en Neon.tech (plan gratuito)
 
 > Para instrucciones detalladas de despliegue, consulta la [Guía de Despliegue](DEPLOY.md).
