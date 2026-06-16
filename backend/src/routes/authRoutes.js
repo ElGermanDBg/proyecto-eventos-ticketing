@@ -4,14 +4,12 @@ const authController = require('../controllers/authController');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 
-// Rate limiting específico para login
 const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 5, // 5 intentos
+  windowMs: 15 * 60 * 1000,
+  max: 5,
   message: { error: 'Demasiados intentos de login, intente de nuevo en 15 minutos' }
 });
 
-// Middleware para validar el body
 const validateRegistration = [
   body('nombre').notEmpty().withMessage('El nombre es obligatorio'),
   body('email').isEmail().withMessage('Debe ser un email válido'),

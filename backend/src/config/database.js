@@ -1,8 +1,7 @@
 const { Sequelize } = require('sequelize');
-require('pg'); // Importación explícita para que Vercel incluya pg en el bundle
+require('pg');
 require('dotenv').config();
 
-// Configuración de opciones de conexión según el entorno
 const isProduction = process.env.DB_HOST && !process.env.DB_HOST.includes('localhost');
 
 const dbOptions = {
@@ -11,13 +10,9 @@ const dbOptions = {
   logging: false
 };
 
-// Neon.tech y otros servicios cloud requieren SSL
 if (isProduction) {
   dbOptions.dialectOptions = {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
+    ssl: { require: true, rejectUnauthorized: false }
   };
 }
 

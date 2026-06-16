@@ -1,126 +1,103 @@
 # Sistema de Gestión de Eventos con Ticketing
 
-Este es el Proyecto Final Integrador del curso. Consiste en una plataforma completa para la gestión de eventos, permitiendo a los usuarios registrarse, visualizar eventos, y comprar tickets con reserva temporal.
+Plataforma web para la gestión de eventos y venta de tickets. Permite a los usuarios registrarse, ver eventos disponibles y comprar entradas. Los administradores pueden crear, editar y eliminar eventos desde un dashboard.
 
-El sistema está construido con una arquitectura Cliente-Servidor (React + Node.js/Express) y utiliza PostgreSQL como base de datos.
+**Repositorio:** https://github.com/ElGermanDBg/proyecto-eventos-ticketing
 
-**Repositorio:** [https://github.com/ElGermanDBg/proyecto-eventos-ticketing](https://github.com/ElGermanDBg/proyecto-eventos-ticketing)
-
-**Aplicación Desplegada:** [https://eventos-frontend.vercel.app](https://eventos-frontend.vercel.app)
+**Aplicación:** https://proyecto-eventos-ticketing-u1cc.vercel.app
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías
 
-**Backend:**
-- Node.js & Express
-- PostgreSQL & Sequelize (ORM)
-- JWT (JSON Web Tokens) para Autenticación
-- express-rate-limit & Helmet para Seguridad y prevención de ataques
-- express-validator para validación de datos
-- UUID para generación de códigos únicos de tickets
+**Backend:** Node.js, Express, PostgreSQL, Sequelize, JWT, Helmet, express-rate-limit, express-validator, UUID
 
-**Frontend:**
-- React (Vite)
-- CSS nativo / Framework (según configuración)
+**Frontend:** React, Vite, Axios, React Router
+
+**Despliegue:** Vercel (frontend + backend serverless), Neon.tech (PostgreSQL)
 
 ---
 
-## 🏗️ Arquitectura del Proyecto (MVC)
+## Estructura del Proyecto
 
 ```
-proyecto/
 ├── backend/
-│   ├── api/                  # Punto de entrada para Vercel Serverless
-│   │   └── index.js
+│   ├── api/
+│   │   └── index.js             # Entry point Vercel
 │   ├── src/
-│   │   ├── config/          # Configuración de Base de Datos (Sequelize)
-│   │   │   └── database.js
-│   │   ├── controllers/     # Controladores (Lógica de Negocio)
+│   │   ├── config/database.js   # Conexión PostgreSQL
+│   │   ├── controllers/
 │   │   │   ├── authController.js
 │   │   │   ├── eventoController.js
 │   │   │   └── ticketController.js
-│   │   ├── middleware/       # Middlewares (Auth JWT, Rate Limiting)
-│   │   │   ├── auth.js
+│   │   ├── middleware/
+│   │   │   ├── auth.js          # JWT y roles
 │   │   │   └── rateLimit.js
-│   │   ├── models/           # Modelos ORM (Sequelize)
+│   │   ├── models/
 │   │   │   ├── Usuario.js
 │   │   │   ├── Evento.js
 │   │   │   └── Ticket.js
-│   │   ├── routes/           # Rutas (Definición de Endpoints)
+│   │   ├── routes/
 │   │   │   ├── authRoutes.js
 │   │   │   ├── eventoRoutes.js
 │   │   │   └── ticketRoutes.js
-│   │   └── app.js            # Punto de entrada del servidor
-│   ├── tests/                # Pruebas unitarias (Jest + Supertest)
+│   │   └── app.js
+│   ├── tests/
 │   │   └── eventos.test.js
 │   ├── package.json
-│   └── vercel.json           # Configuración de despliegue Vercel (Backend)
+│   └── vercel.json
 ├── frontend/
 │   ├── src/
-│   │   ├── components/       # Componentes React
+│   │   ├── components/
 │   │   │   ├── Login.jsx
 │   │   │   ├── EventosList.jsx
 │   │   │   ├── CompraTicket.jsx
 │   │   │   └── Dashboard.jsx
-│   │   ├── services/         # Configuración de API (Axios)
-│   │   │   └── api.js
+│   │   ├── services/api.js
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   └── package.json
-├── render.yaml               # Configuración de despliegue alternativa (Render.com)
-├── INFORME_SEGURIDAD.md      # Informe de seguridad implementada
-├── DEPLOY.md                 # Guía de despliegue en Vercel
-└── README.md                 # Este archivo
+├── INFORME_SEGURIDAD.md
+├── DEPLOY.md
+└── README.md
 ```
 
 ---
 
-## 🛠️ Instalación y Configuración Local
+## Instalación Local
 
-Sigue estos pasos para ejecutar el proyecto en tu entorno local.
+### Base de datos
+Tener PostgreSQL instalado y crear una base de datos.
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/ElGermanDBg/proyecto-eventos-ticketing.git
-cd proyecto-eventos-ticketing
-```
-
-### 2. Configuración de Base de Datos
-1. Asegúrate de tener **PostgreSQL** instalado y ejecutándose.
-2. Crea una base de datos llamada `eventos_db` (puedes usar pgAdmin o psql).
-
-### 3. Configuración del Backend
+### Backend
 ```bash
 cd backend
 npm install
 ```
-Crea un archivo `.env` en la carpeta `backend` con las siguientes variables:
-```env
+
+Crear archivo `.env`:
+```
 PORT=5000
 DB_NAME=eventos_db
 DB_USER=postgres
-DB_PASSWORD=tu_contraseña_de_postgres
+DB_PASSWORD=tu_password
 DB_HOST=localhost
-JWT_SECRET=tu_clave_super_secreta_para_jwt
+JWT_SECRET=clave_secreta
 FRONTEND_URL=http://localhost:5173
 ```
-Inicia el servidor backend:
+
 ```bash
 npm start
-# o npm run dev (si usas nodemon)
 ```
 
-### 4. Configuración del Frontend
-Abre otra terminal y ejecuta:
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-La aplicación web estará disponible en `http://localhost:5173` (o el puerto que asigne Vite).
 
-### 5. Ejecutar pruebas unitarias
+### Tests
 ```bash
 cd backend
 npm test
@@ -128,57 +105,50 @@ npm test
 
 ---
 
-## 📡 Endpoints Principales (API RESTful)
+## API RESTful
 
-### Autenticación (`/api/auth`)
+### Autenticación
 | Método | Ruta | Descripción | Auth |
 |--------|------|-------------|------|
-| POST | `/api/auth/register` | Registra un nuevo usuario (encripta password con bcrypt) | No |
-| POST | `/api/auth/login` | Inicia sesión y devuelve token JWT (limitado a 5 intentos/15min) | No |
+| POST | /api/auth/register | Registro de usuario | No |
+| POST | /api/auth/login | Login (devuelve JWT) | No |
 
-### Eventos (`/api/eventos`)
+### Eventos
 | Método | Ruta | Descripción | Auth |
 |--------|------|-------------|------|
-| GET | `/api/eventos` | Lista todos los eventos disponibles | No |
-| GET | `/api/eventos/:id` | Detalle de un evento específico | No |
-| POST | `/api/eventos` | Crear un nuevo evento | JWT + Admin |
-| PUT | `/api/eventos/:id` | Actualizar un evento existente | JWT + Admin |
-| DELETE | `/api/eventos/:id` | Eliminar un evento | JWT + Admin |
+| GET | /api/eventos | Listar eventos | No |
+| GET | /api/eventos/:id | Detalle de evento | No |
+| POST | /api/eventos | Crear evento | JWT + Admin |
+| PUT | /api/eventos/:id | Editar evento | JWT + Admin |
+| DELETE | /api/eventos/:id | Eliminar evento | JWT + Admin |
 
-### Tickets (`/api/tickets`)
+### Tickets
 | Método | Ruta | Descripción | Auth |
 |--------|------|-------------|------|
-| POST | `/api/tickets/comprar` | Comprar un ticket para un evento | JWT |
-| GET | `/api/tickets/mis-tickets` | Ver tickets del usuario autenticado | JWT |
+| POST | /api/tickets/comprar | Comprar ticket | JWT |
+| GET | /api/tickets/mis-tickets | Mis tickets | JWT |
 
-### Códigos de Estado HTTP Utilizados
-- `200` — Operación exitosa
-- `201` — Recurso creado exitosamente
-- `400` — Error de validación / solicitud incorrecta
-- `401` — Token inválido o expirado
-- `403` — Sin autorización / sin token
-- `404` — Recurso no encontrado
-- `500` — Error interno del servidor
+### Códigos de estado
+- `200` OK — `201` Creado — `400` Validación — `401` Token inválido — `403` Sin autorización — `404` No encontrado — `500` Error del servidor
 
 ---
 
-## 🛡️ Seguridad Implementada (OWASP)
-Este proyecto integra múltiples capas de seguridad:
-1. **Helmet.js**: Configura cabeceras HTTP seguras para proteger la app de vulnerabilidades web conocidas (XSS, Clickjacking).
-2. **Rate Limiting**: Previene ataques de denegación de servicio (DDoS) y ataques de fuerza bruta. Limitado a 100 peticiones generales y 5 peticiones específicas para la ruta de login.
-3. **CORS Restringido**: Configuración de orígenes permitidos específicos, evitando peticiones no autorizadas desde dominios externos.
-4. **Validación de Datos**: Uso de `express-validator` para sanear y validar el input del usuario antes de que llegue a la base de datos.
-5. **Protección de Contraseñas**: Hasheo con `bcryptjs` en la base de datos. Ninguna contraseña se guarda en texto plano.
-6. **Autenticación sin estado**: Uso de JSON Web Tokens (JWT) para evitar almacenar sesiones en el servidor.
+## Seguridad
 
-> Para más detalles, consulta el [Informe de Seguridad](INFORME_SEGURIDAD.md).
+- **Helmet** — Headers HTTP seguros (XSS, Clickjacking)
+- **Rate Limiting** — 100 req/15min global, 5 intentos login/15min
+- **CORS** — Orígenes restringidos por entorno
+- **Bcrypt** — Hash de contraseñas con 10 rondas de salt
+- **JWT** — Tokens con expiración de 24h
+- **Validación** — express-validator en registro y login
+- **Sequelize** — Prevención de SQL injection por parametrización
+
+Ver detalle en [INFORME_SEGURIDAD.md](INFORME_SEGURIDAD.md)
 
 ---
 
-## 🚀 Despliegue
-La aplicación está desplegada en **Vercel** como dos proyectos separados:
-- ✅ **Frontend** — Static Site (Vite/React) en Vercel
-- ✅ **Backend** — Serverless Functions (Express/Node.js) en Vercel
-- ✅ **Base de datos** — PostgreSQL en Neon.tech (plan gratuito)
+## Despliegue
 
-> Para instrucciones detalladas de despliegue, consulta la [Guía de Despliegue](DEPLOY.md).
+Desplegado en **Vercel** como dos proyectos (frontend estático + backend serverless) con base de datos en **Neon.tech**.
+
+Ver instrucciones en [DEPLOY.md](DEPLOY.md)
