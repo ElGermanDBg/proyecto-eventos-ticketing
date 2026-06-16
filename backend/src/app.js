@@ -46,6 +46,39 @@ app.get('/', (req, res) => {
   res.send('API funcionando correctamente');
 });
 
+// Endpoint de diagnóstico (para verificar la conexión a la DB)
+app.get('/api/health', async (req, res) => {
+  try {
+    const sequelize = require('./config/database');
+    await sequelize.authenticate();
+    res.json({
+      status: 'OK',
+      database: 'Conectada',
+      env: {
+        DB_HOST: process.env.DB_HOST ? '✅ configurado' : '❌ falta',
+        DB_NAME: process.env.DB_NAME ? '✅ configurado' : '❌ falta',
+        DB_USER: process.env.DB_USER ? '✅ configurado' : '❌ falta',
+        DB_PASSWORD: process.env.DB_PASSWORD ? '✅ configurado' : '❌ falta',
+        JWT_SECRET: process.env.JWT_SECRET ? '✅ configurado' : '❌ falta',
+        FRONTEND_URL: process.env.FRONTEND_URL || '❌ no configurado',
+        VERCEL: process.env.VERCEL ? 'sí' : 'no'
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'ERROR',
+      database: 'Desconectada',
+      error: err.message,
+      env: {
+        DB_HOST: process.env.DB_HOST ? '✅ configurado' : '❌ falta',
+        DB_NAME: process.env.DB_NAME ? '✅ configurado' : '❌ falta',
+        DB_USER: process.env.DB_USER ? '✅ configurado' : '❌ falta',
+        DB_PASSWORD: process.env.DB_PASSWORD ? '✅ configurado' : '❌ falta'
+      }
+    });
+  }
+});
+
 // Sincronización de Base de Datos (lazy: solo al primer request en serverless)
 let dbSynced = false;
 const syncDatabase = async () => {
