@@ -20,8 +20,8 @@ exports.comprarTicket = async (req, res) => {
       return res.status(400).json({ error: 'El evento está agotado' });
     }
 
-    // Generar código único para el ticket (usando la fecha para simplificar si uuid falla, pero ideal usar uuid)
-    const codigo_unico = `TKT-${evento_id}-${Date.now()}`;
+    // Generar código único para el ticket usando UUID v4
+    const codigo_unico = `TKT-${uuidv4()}`;
 
     const nuevoTicket = await Ticket.create({
       usuario_id,

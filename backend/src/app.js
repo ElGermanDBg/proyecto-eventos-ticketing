@@ -7,9 +7,17 @@ require('dotenv').config();
 
 const app = express();
 
+// Configuración de CORS: restringe los orígenes permitidos según el entorno
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
 // Middlewares Globales
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(helmet()); // Seguridad OWASP (Headers)
 
 // Rate Limiting Global
