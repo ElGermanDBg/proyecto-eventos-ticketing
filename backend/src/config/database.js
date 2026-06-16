@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+require('pg'); // Importación explícita para que Vercel incluya pg en el bundle
 require('dotenv').config();
 
 // Configuración de opciones de conexión según el entorno
